@@ -1,0 +1,94 @@
+@startuml CardGame
+
+class Cards {
+  +{static} list Cards
+  +list DefineTrump()
+}
+note top of Cards
+  listはenum型で定義
+end note
+
+class GameStarting {
+  -bool BooleanGameStart
+  +list<GameObject> WaitingObject
+  +void GameStart()
+}
+
+class Shuffling {
+  -list Cards
+  +list shuffle()
+}
+
+namespace GameTurn {
+  class DealingCard {
+    -list Cards
+    +void DealOut()
+    +void draw()
+  }
+
+  class HandCard {
+    +list HandCards
+  }
+
+  class DrawingHandCard {
+    -list HandCards
+    +void selectCard()
+    +void draw()
+  }
+
+  class Drawing {
+    +list Cards
+    +void draw()
+  }
+
+  class PlayingTurn {
+  }
+
+  class TurnManager {
+    +{static} bool Turn
+  }
+
+  class ThrowingCard {
+    -list HandCards
+    +void throw()
+  }
+
+  namespace CPUTurnPoint {
+    class DrawingCPU {
+      -list HandCard
+      -void selectCard()
+      +void draw()
+    }
+
+    class CPUTurn {
+    }
+  }
+}
+
+interface ITurn {
+  void drawCard()
+  void throwCard()
+  void endTurn()
+  void waitTurn()
+}
+
+DrawingHandCard --|> Drawing
+DealingCard --|> Drawing
+DrawingCPU --|> Drawing
+Shuffling --> Cards
+GameStarting --> Shuffling
+GameTurn --> GameStarting
+CPUTurn -- PlayingTurn
+DealingCard --> GameTurn
+CPUTurn -- ThrowingCard
+ThrowingCard -- PlayingTurn
+ThrowingCard -- HandCard
+DrawingHandCard -- PlayingTurn
+DrawingCPU -- CPUTurn
+Drawing -- HandCard
+CPUTurn ..|> ITurn
+PlayingTurn ..|> ITurn
+CPUTurn -- TurnManager
+PlayingTurn -- TurnManager
+
+@enduml

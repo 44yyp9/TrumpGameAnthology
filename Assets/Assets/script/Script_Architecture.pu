@@ -4,7 +4,7 @@ class Cards{
   +{static} list Cards
   +list DefineTrump()
 }
-note right of Cards
+note top of Cards
   listはenum型で定義
 end note
 class GameStarting{
@@ -35,13 +35,12 @@ class Drawing{
   +void draw()
 }
 class PlayingTurn{
-  +bool playerTurn
-  -void draw()
-  -void throwCard()
-  -bool TurnEnd()
-  +void watingPlayer()
+
 }
-note right of PlayingTurn
+class TurnManeger{
+  +{static} bool Turn
+}
+note top of PlayingTurn
   とりあえずターンはプレイヤーとcpu2人のみ
 end note
 class ThrowingCard{
@@ -55,12 +54,14 @@ class DrawingCPU{
   +void draw()
 }
 class CPUTurn{
-  -void draw()
-  -void throwCard()
-  -Bool TurnEnd()
-  -void watingCPU()
 }
 }
+}
+class Iturn{
+  void draw()
+  void throwCard()
+  void TurnEnd()
+  void waitTurn()
 }
 DrawingHandCard --|>Drawing
 DealinngCard --|>Drawing
@@ -76,4 +77,8 @@ ThrowingCard--HandCard
 DrawingHandCard--PlayingTurn
 DrawingCPU--CPUTurn
 Drawing-HandCard
+CPUTurn ..|> Iturn
+PlayingTurn ..|> Iturn
+CPUTurn--TurnManeger
+PlayingTurn--TurnManeger
 @enduml
