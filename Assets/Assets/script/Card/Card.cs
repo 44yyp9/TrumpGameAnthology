@@ -39,5 +39,6 @@ public class Card : MonoBehaviour
         }
         //0‚Íjocker
         Card card =new Card(0, Suit.joker);
+        Card.Cards.Add(card);
     }
 }
