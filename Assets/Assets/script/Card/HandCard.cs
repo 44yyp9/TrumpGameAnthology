@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HandCard : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public List<Card> HandCards=new List<Card>();
     void Start()
     {
         
