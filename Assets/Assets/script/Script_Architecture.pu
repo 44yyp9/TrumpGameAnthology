@@ -10,75 +10,62 @@ end note
 class GameStarting{
   -bool BooleanGameStart
   +list<GameOject> WaitngObject
+  +void shuffle()
+  +void deal()
   +void GameStart()
 }
-class shuffling{
-  - list Cards
-  +list shuffle()
+interface Ishuffling{
+  +void shuffle()
 }
-namespace GameTurn{
-class DealinngCard{
-  - list Cards
-  +void DealOut()
-  + void draw()
+interface Idealing{
+  +deal(list<GameOject> player)
 }
-class HandCard{
-  +list HandCards
-}
-class DrawingHandCard{
-  -list HandCards
-  +void selectCard()
-  +void draw()
-}
-class Drawing{
-  +list Cards
-  +void draw()
-}
-class PlayingTurn{
-
-}
-class TurnManeger{
-  +{static} bool Turn
-}
-note top of PlayingTurn
-  とりあえずターンはプレイヤーとcpu2人のみ
-end note
-class ThrowingCard{
-  -list HandCards
-  +void throw()
-}
-namespace CPUTurnPoint{
-class DrawingCPU{
-  -list HandCard
-  -void selectCard()
-  +void draw()
-}
-class CPUTurn{
-}
-}
-}
-class Iturn{
+abstract class Player{
   void draw()
   void throwCard()
-  void TurnEnd()
-  void waitTurn()
+  void shuffle()
+  void end_turn()
 }
-DrawingHandCard --|>Drawing
-DealinngCard --|>Drawing
-DrawingCPU--|>Drawing
-shuffling-->Cards
-GameStarting-->shuffling
-GameTurn-->GameStarting
-CPUTurn--PlayingTurn
-DealinngCard-->GameTurn
-CPUTurn--ThrowingCard
-ThrowingCard--PlayingTurn
-ThrowingCard--HandCard
-DrawingHandCard--PlayingTurn
-DrawingCPU--CPUTurn
-Drawing-HandCard
-CPUTurn ..|> Iturn
-PlayingTurn ..|> Iturn
-CPUTurn--TurnManeger
-PlayingTurn--TurnManeger
+class MyCharacter{
+  +void draw()
+  +void wait_time()
+  +void throwCard()
+  +void shuffle()
+  +void end_turn()
+}
+class EnemyCharacter{
+  +void draw()
+  +void throwCard()
+  +void shuffle()
+  +void end_turn()
+}
+class TurnManeger{
+  +void chageTurn()
+  +void end_game()
+}
+interface IDrawing{
+  +void draw()
+}
+interface IThorwing{
+  +void throwCard()
+}
+interface IEnd_game{
+  +void end_game()
+}
+interface IEnd_turn{
+  +void end_turn()
+}
+GameStarting..>Ishuffling
+GameStarting..>Idealing
+MyCharacter..>Player
+EnemyCharacter..>Player
+TurnManeger..>IEnd_game
+Player..>IDrawing
+Player..>IThorwing
+Player..>IEnd_turn
+Player..>Ishuffling
+MyCharacter-EnemyCharacter
+MyCharacter-->TurnManeger
+EnemyCharacter-->TurnManeger
+GameStarting-->Cards
 @enduml
