@@ -1,53 +1,56 @@
 @startuml CardGame
-
-class Cards{
+class Card{
   +{static} list Cards
-  +list DefineTrump()
+}
+class Cards{
+  +list<Card> DefineTrump()
 }
 note top of Cards
   listはenum型で定義
 end note
 class GameStarting{
-  -bool BooleanGameStart
-  +list<GameOject> WaitngObject
+  -bool boolean_game_srtarting
+  +list<GameOject> waitng_object
   +void shuffle()
-  +void deal()
-  +void GameStart()
+  +list<list<Cards>> deal()
+  +void start_game()
+}
+class DealingCards{
+  +list<list<Cards>> deal()
 }
 interface Ishuffling{
   +void shuffle()
 }
 interface Idealing{
-  +deal(list<GameOject> player)
+  +list<list<Cards>> deal()
 }
 abstract class Player{
   void draw()
-  void throwCard()
-  void shuffle()
+  +list<Cards> throw_card()
+  +list<Cards> shuffle()
   void end_turn()
 }
 class MyCharacter{
+  +list<Cards> hand_cards
   +void draw()
   +void wait_time()
-  +void throwCard()
-  +void shuffle()
+  +list<Cards> throw_card()
+  +list<Cards> shuffle()
   +void end_turn()
 }
 class EnemyCharacter{
+  +list<Cards> hand_cards
   +void draw()
-  +void throwCard()
-  +void shuffle()
+  +list<Cards> throw_card()
+  +list<Cards> shuffle()
   +void end_turn()
 }
 class TurnManeger{
-  +void chageTurn()
+  +void chage_turn()
   +void end_game()
 }
 interface IDrawing{
   +void draw()
-}
-interface IThorwing{
-  +void throwCard()
 }
 interface IEnd_game{
   +void end_game()
@@ -57,15 +60,15 @@ interface IEnd_turn{
 }
 GameStarting..>Ishuffling
 GameStarting..>Idealing
+GameStarting-->DealingCards
 MyCharacter..>Player
 EnemyCharacter..>Player
 TurnManeger..>IEnd_game
 Player..>IDrawing
-Player..>IThorwing
 Player..>IEnd_turn
 Player..>Ishuffling
-MyCharacter-EnemyCharacter
 MyCharacter-->TurnManeger
 EnemyCharacter-->TurnManeger
 GameStarting-->Cards
+Cards-->Card
 @enduml
