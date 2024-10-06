@@ -7,8 +7,8 @@ public class Drawing : MonoBehaviour
 {
     public void DrawStack(List<Card> MyHandCards)
     {
-        var TopCard = Card.Cards[0];
-        Card.Cards.RemoveAt(0);
+        var TopCard = CardsStack.Cards[0];
+        CardsStack.Cards.RemoveAt(0);
         MyHandCards.Add(TopCard);
     }
 }

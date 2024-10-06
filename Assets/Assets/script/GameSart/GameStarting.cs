@@ -19,7 +19,7 @@ public class GameStarting : MonoBehaviour,IShuffling
     {
         while (true)
         {
-            if (Card.Cards.Count== targetValue)
+            if (CardsStack.Cards.Count== targetValue)
             {
                 Shuffle();
                 StartGame();
@@ -30,7 +30,7 @@ public class GameStarting : MonoBehaviour,IShuffling
     }
     public void Shuffle()
     {
-        Card.Cards = Card.Cards.OrderBy(a => Guid.NewGuid()).ToList();
+        CardsStack.Cards = CardsStack.Cards.OrderBy(a => Guid.NewGuid()).ToList();
     }
     private void StartGame()
     {

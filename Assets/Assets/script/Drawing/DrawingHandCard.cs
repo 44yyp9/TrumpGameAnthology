@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class DrawingHandCard : MonoBehaviour,IDrawingHandCard
+public class DrawingHandCard : MonoBehaviour
 {
+    /*
     [SerializeField] GameObject enemy;
     private HandCard EnemyCard;
     private HandCard PlayerCard;
@@ -53,4 +54,5 @@ public class DrawingHandCard : MonoBehaviour,IDrawingHandCard
         if(CardPosition<0) CardPosition=Cards.Count;
         if (Cards.Count < CardPosition) CardPosition = 0;
     }
+    */
 }
