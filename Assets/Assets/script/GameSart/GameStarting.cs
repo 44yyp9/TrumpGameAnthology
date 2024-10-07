@@ -6,10 +6,11 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class GameStarting : MonoBehaviour,IShuffling
+public class GameStarting : MonoBehaviour,IShuffling,IDealing
 {
     private int targetValue = 53;
     [SerializeField] List<GameObject> GameStartingObj= new List<GameObject>();
+    [SerializeField] List<GameObject> Charactors= new List<GameObject>();
     void Start()
     {
         SetActiveObj(false);
@@ -22,6 +23,7 @@ public class GameStarting : MonoBehaviour,IShuffling
             if (CardsStack.Cards.Count== targetValue)
             {
                 Shuffle();
+                deal();
                 StartGame();
                 yield break;
             }
@@ -42,5 +44,15 @@ public class GameStarting : MonoBehaviour,IShuffling
         {
             GameStartingObj[i].SetActive(Active);
         }
+    }
+    public void deal()
+    {
+        //‚±‚±‚ÌŽè‘±‚«•û•Ï‚¦‚½‚¢
+        var dealingScript = new Dealing();
+        var dealing = dealingScript.dealCard(Charactors);
+        var my_charactor = Charactors[0].GetComponent<MyCharactor>();
+        var enemy = Charactors[1].GetComponent<EnemyCharactor>();
+        my_charactor.hand_card = dealing[0];
+        enemy.hand_card= dealing[1];
     }
 }
