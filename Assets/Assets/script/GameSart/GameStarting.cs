@@ -6,13 +6,17 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class GameStarting : MonoBehaviour,IShuffling,IDealing
+public class GameStarting : MonoBehaviour,IShuffling,IDealing,IThrowingCard
 {
     private int targetValue = 53;
     [SerializeField] List<GameObject> GameStartingObj= new List<GameObject>();
     [SerializeField] List<GameObject> Charactors= new List<GameObject>();
+    MyCharactor my_charactor;
+    EnemyCharactor enemy;
     void Start()
     {
+        my_charactor = Charactors[0].GetComponent<MyCharactor>();
+        enemy = Charactors[1].GetComponent<EnemyCharactor>();
         SetActiveObj(false);
         StartCoroutine(CheckValueCoroutine());
     }
@@ -24,6 +28,8 @@ public class GameStarting : MonoBehaviour,IShuffling,IDealing
             {
                 Shuffle();
                 deal();
+                my_charactor.hand_card = throwCard(my_charactor.hand_card);
+                enemy.hand_card = throwCard(enemy.hand_card);
                 StartGame();
                 yield break;
             }
@@ -50,9 +56,13 @@ public class GameStarting : MonoBehaviour,IShuffling,IDealing
         //‚±‚±‚ÌŽè‘±‚«•û•Ï‚¦‚½‚¢
         var dealingScript = new Dealing();
         var dealing = dealingScript.dealCard(Charactors);
-        var my_charactor = Charactors[0].GetComponent<MyCharactor>();
-        var enemy = Charactors[1].GetComponent<EnemyCharactor>();
         my_charactor.hand_card = dealing[0];
         enemy.hand_card= dealing[1];
+    }
+    public List<Card> throwCard(List<Card> cards)
+    {
+        var throwingScript = new ThrowingCard();
+        var result_cards = throwingScript.thorw(cards);
+        return result_cards;
     }
 }

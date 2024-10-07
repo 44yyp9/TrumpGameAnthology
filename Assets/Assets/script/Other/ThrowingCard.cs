@@ -2,17 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ThrowingCard : MonoBehaviour
+public class ThrowingCard
 {
-    // Start is called before the first frame update
-    void Start()
+    public List<Card> thorw(List<Card> cards)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        for(int i = 0; i < cards.Count; i++)
+        {
+            var taget_card = cards[i].Number;
+            for (int j = i + 1; j < cards.Count; j++)
+            {
+                var tageted_card= cards[j].Number;
+                if (taget_card == tageted_card)
+                {
+                    cards.RemoveAt(i);
+                    cards.RemoveAt(j);
+                    i -= 1;
+                    break;
+                }
+            }
+        }
+        return cards;
     }
 }
